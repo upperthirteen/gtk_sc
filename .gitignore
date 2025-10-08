@@ -1,0 +1,6 @@
+#Rust/Cargo
+target/
+Cargo.lock
+
+#VS
+.vscode/
