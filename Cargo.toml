@@ -7,4 +7,5 @@ edition = "2021"
 #lto = true
  
 [dependencies]
-gtk4 = "0.9"
+gtk4 = "0.10.1"
+tokio = "=1.47.1" #https://crates.io/crates/tokio/1.47.1
