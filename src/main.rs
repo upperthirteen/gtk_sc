@@ -10,31 +10,37 @@ fn main() {
         .build();
 
     app.connect_activate(|app: &Application| {
-        let (width, height) = if let Some(display) = Display::default(){
-            let monitor = display.monitors().item(0).and_downcast::<gtk4::gdk::Monitor>().unwrap();
-            let monitor_geo = monitor.geometry();
-            ((monitor_geo.width() as f32 * START_WINDOW_WIDTH_PCT) as i32,
-            (monitor_geo.height() as f32 * START_WINDOW_HEIGHT_PCT) as i32)
-        } else {
-            (START_WINDOW_WIDTH_INT, START_WINDOW_HEIGHT_INT)
-        };
+        let (width, height) = get_start_size();
 
-        let button: Button = Button::with_label("Click");
-        button.connect_clicked(|_| {
-        });
+        // let button: Button = Button::with_label("Click");
+        // button.connect_clicked(|_| {
+        // });
 
         let window: ApplicationWindow = ApplicationWindow::builder()
             .application(app)
             .title(APP_TITLE)
             .default_width(width)
             .default_height(height)
-            .child(&button)
+            //.child(&button)
             .build();
 
         window.show();
     });
 
     app.run();
+}
+
+fn get_start_size() -> (i32, i32) {
+    if let Some(display) = Display::default(){
+            let monitor = display.monitors().item(0).and_downcast::<gtk4::gdk::Monitor>().unwrap();
+            let geo = monitor.geometry();
+            (
+                (geo.width() as f32 * START_WINDOW_WIDTH_PCT) as i32,
+                (geo.height() as f32 * START_WINDOW_HEIGHT_PCT) as i32
+            )
+    } else {
+        (START_WINDOW_WIDTH_INT, START_WINDOW_HEIGHT_INT)
+    }
 }
 
 // const
